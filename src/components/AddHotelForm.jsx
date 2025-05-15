@@ -1,6 +1,7 @@
 import { use, useState } from "react";
 
 const AddHotelForm = () => {
+  const apiUrl = process.env.REACT_APP_API_URL
   const [formData, setFormData] = useState({
     name: "",
     category: [],
@@ -32,7 +33,7 @@ const AddHotelForm = () => {
     e.preventDefault(); 
     // console.log(formData)
     try {
-      const response = await fetch('http://localhost:3000/hotels', {
+      const response = await fetch(`${apiUrl}/hotels`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

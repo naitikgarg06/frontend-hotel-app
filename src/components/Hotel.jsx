@@ -1,13 +1,15 @@
 import { useState } from "react";
 import useFetch from "../useFetch";
 
+
 const Hotel = () => {
   const [successMessage, setSuccessMessage] = useState("");
-  const { data, loading, error } = useFetch("http://localhost:3000/hotels");
+  const apiUrl = process.env.REACT_APP_API_URL
+  const { data, loading, error } = useFetch(`${apiUrl}/hotels`);
 
   const handleDelete = async (hotelId) => {
     try {
-      const response = await fetch(`http://localhost:3000/hotels/${hotelId}`, { method: "DELETE"} )
+      const response = await fetch(`${apiUrl}/hotels/${hotelId}`, { method: "DELETE"} )
 
       if(!response.ok){
         throw "Failed to delete hotel"

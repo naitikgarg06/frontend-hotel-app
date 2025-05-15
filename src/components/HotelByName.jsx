@@ -1,7 +1,8 @@
 import useFetch from "../useFetch";
 
 const HotelByName = ({name}) => {
-    const {data, loading, error} = useFetch(`http://localhost:3000/hotels/${name}`)
+    const apiUrl = process.env.REACT_APP_API_URL
+    const {data, loading, error} = useFetch(`${apiUrl}/hotels/${name}`)
 
     return data ? (
         <div>
