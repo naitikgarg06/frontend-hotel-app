@@ -1,18 +1,54 @@
-import useFetch from '../useFetch'
+import { useState } from "react";
+import useFetch from "../useFetch";
 
 const Hotel = () => {
-    const { data, loading ,error} = useFetch("http://localhost:3000/hotels")
+  const [successMessage, setSuccessMessage] = useState("");
+  const { data, loading, error } = useFetch("http://localhost:3000/hotels");
 
-    return data ? (
-        <div>
-            <h1>All Hotels</h1>
-            <ul>
-                {data.map((hotel) => (
-                    <li key={hotel._id}>{hotel.name}</li>
-                ))}
-            </ul>
-        </div>
-    ) : ( loading && <p>Loading...</p>)
-}
+  const handleDelete = async (hotelId) => {
+    try {
+      const response = await fetch(`http://localhost:3000/hotels/${hotelId}`, { method: "DELETE"} )
 
-export default Hotel
+      if(!response.ok){
+        throw "Failed to delete hotel"
+      }
+
+      const data = await response.json()
+      if(data){
+        setSuccessMessage("Hotel deleted successfully")
+        window.location.reload()
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <div>
+      {loading && <p>Loading...</p>}
+      {data?.error && <p>{data.error}</p>}
+      {data && (
+        <>
+          <h1>All Hotels</h1>
+          <ul>
+            {data.map((hotel) => (
+              <li key={hotel._id}>
+                {hotel.name}{" "}
+                <button
+                  onClick={() => {
+                    handleDelete(hotel._id);
+                  }}
+                >
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+      <p>{successMessage}</p>
+    </div>
+  );
+};
+
+export default Hotel;

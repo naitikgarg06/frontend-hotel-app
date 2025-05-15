@@ -10,3 +10,10 @@ Added a new component `AddHotelForm` which allows user to add a new hotel to the
 
 # NOTES 
 - The backend route `/hotels` must be running for this to work
+
+# BI1.3_HW2 - ADD DELETE FUNCTIONALITY
+
+# FEATURES
+- delete button for each hotel item to let user delete it from database
+- uses DELETE `/hotels/hotelId` route to send delete request
+- displays success message and renders updated hotel list
